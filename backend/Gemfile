@@ -63,3 +63,10 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "GiphyClient", "~> 1.0"
 
 gem "bcrypt", "~> 3.1"
+
+# Current version has a conflict with rails 6
+# https://davidgay.org/programming/jwt-auth-rails-6-knock/
+gem "knock", github: "nsarno/knock", branch: "master",
+    ref: "9214cd027422df8dc31eb67c60032fbbf8fc100b"
+
+gem "active_model_serializers", "~> 0.10.12"
