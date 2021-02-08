@@ -4,8 +4,14 @@ Rails.application.routes.draw do
       resource :gifs, only: [] do
         get 'search', on: :collection
       end
-      
-      resource :users, only: [:create]
+
+      resources :users, only: [:create] do
+        member do
+          resources :gifs, only: [:index] do
+            post 'favorite', on: :collection
+          end
+        end
+      end
 
       post 'user_token' => 'user_token#create'
     end
