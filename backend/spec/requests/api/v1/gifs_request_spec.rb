@@ -48,14 +48,14 @@ RSpec.describe "Api::V1::Gifs", type: :request do
     before { user.gifs << gifs }
 
     it "returns user\'s favorited gifs with http success code" do
-      get "/api/v1/users/#{user.id}/gifs", headers: authenticated_header(user).merge(headers)
+      get "/api/v1/gifs", headers: authenticated_header(user).merge(headers)
       expect(response).to have_http_status(:success)
       expect(JSON.parse(response.body)).to match_array gifs.as_json
     end
 
     context 'without authentication' do
       it "returns http unauthorized error code" do
-        get "/api/v1/users/#{user.id}/gifs", headers: headers
+        get "/api/v1/gifs", headers: headers
         expect(response).to have_http_status(:unauthorized)
       end
     end
@@ -75,7 +75,7 @@ RSpec.describe "Api::V1::Gifs", type: :request do
     let!(:gif) { create :gif, external_id: params[:external_id] }
 
     it "favorites the gif and returns http success code" do
-      post "/api/v1/users/#{user.id}/gifs/favorite",
+      post "/api/v1/gifs/favorite",
         headers: authenticated_header(user).merge(headers), params: params
       expect(response).to have_http_status(:created)
       expect(user.favorites.last).to eq gif
@@ -83,7 +83,7 @@ RSpec.describe "Api::V1::Gifs", type: :request do
 
     context 'without authentication' do
       it "fails and returns http unauthorized error code" do
-        post "/api/v1/users/#{user.id}/gifs/favorite",
+        post "/api/v1/gifs/favorite",
           headers: headers, params: params
         expect(response).to have_http_status(:unauthorized)
         expect(user.favorites).to be_empty
@@ -94,7 +94,7 @@ RSpec.describe "Api::V1::Gifs", type: :request do
       let(:gif) { nil }
 
       it "creates and favorites the gif" do
-        post "/api/v1/users/#{user.id}/gifs/favorite",
+        post "/api/v1/gifs/favorite",
           headers: authenticated_header(user).merge(headers), params: params
         expect(response).to have_http_status(:created)
         expect(user.favorites.last.external_id).to eq params[:external_id]

@@ -1,19 +1,14 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
-      resource :gifs, only: [] do
+      resources :gifs, only: [:index] do
         get 'search', on: :collection
+        post 'favorite', on: :collection
       end
 
-      resources :users, only: [:create] do
-        member do
-          resources :gifs, only: [:index] do
-            post 'favorite', on: :collection
-          end
-        end
-      end
+      resources :users, only: [:create]
 
-      post 'user_token' => 'user_token#create'
+      resource :user_token, only: [:create]
     end
   end
 end
