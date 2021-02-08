@@ -31,7 +31,7 @@ RSpec.describe "Api::V1::Gifs", type: :request do
     end
 
     context 'without a query param' do
-      it 'is responds with an unprocessable entity error' do
+      it 'responds with an unprocessable entity error' do
         allow($giphy).to receive(:gifs_search_get).and_return giphy_api_result
         get "/api/v1/gifs/search?page=3"
         expect(response).to have_http_status(:unprocessable_entity)
