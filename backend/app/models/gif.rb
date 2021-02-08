@@ -1,6 +1,9 @@
 class Gif < ApplicationRecord
   validates :external_id, presence: true
 
+  has_many :users_gifs
+  has_many :users, through: :users_gifs
+
   API_KEY = ENV['GIPHY_KEY'].freeze
   SEARCH_LIMIT = 25.freeze
   SEARCH_RATING = 'g'.freeze
