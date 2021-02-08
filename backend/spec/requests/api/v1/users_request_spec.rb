@@ -10,7 +10,9 @@ RSpec.describe "Api::V1::Users", type: :request do
 
     it "returns http success" do
       post "/api/v1/users", params: params, headers: headers
+      token = Knock::AuthToken.new(payload: { sub: User.last.id }).token
       expect(response).to have_http_status(:created)
+      expect(response.body).to eq ({ jwt: token }).to_json
     end
 
     context 'without an email param' do
