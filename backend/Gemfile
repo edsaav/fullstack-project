@@ -70,3 +70,7 @@ gem "knock", github: "nsarno/knock", branch: "master",
     ref: "9214cd027422df8dc31eb67c60032fbbf8fc100b"
 
 gem "active_model_serializers", "~> 0.10.12"
+
+gem "rack-cors", "~> 1.1"
+
+gem "pg_search", "~> 2.3"
