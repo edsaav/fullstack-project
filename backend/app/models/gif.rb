@@ -4,6 +4,12 @@ class Gif < ApplicationRecord
   has_many :users_gifs
   has_many :users, through: :users_gifs
 
+  # Enables fuzzy full text search
+  include PgSearch::Model
+  pg_search_scope :search_title, against: :title
+
+  scope :recent_first, -> { includes(:users_gifs).order('users_gifs.created_at DESC') }
+
   API_KEY = ENV['GIPHY_KEY'].freeze
   SEARCH_LIMIT = 25.freeze
   SEARCH_RATING = 'g'.freeze
@@ -32,6 +38,7 @@ class Gif < ApplicationRecord
     def normalize(gif)
       Gif.new(
         external_id: gif.id,
+        title: gif.slug,
         url_small: gif.images.fixed_height.url
       )
     end

@@ -25,6 +25,7 @@ RSpec.describe Gif, type: :model do
         data: [
           OpenStruct.new(
             id: 'foo',
+            slug: 'title',
             images: OpenStruct.new(
               fixed_height: OpenStruct.new(url: 'http://test.com/foo')
             )
@@ -48,6 +49,7 @@ RSpec.describe Gif, type: :model do
       allow($giphy).to receive(:gifs_search_get).and_return giphy_api_result
       expect(search.first.attributes).to eq Gif.new(
         external_id: 'foo',
+        title: 'title',
         url_small: 'http://test.com/foo'
       ).attributes
     end

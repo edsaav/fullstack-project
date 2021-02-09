@@ -4,7 +4,7 @@ class Api::V1::GifsController < ApplicationController
   GIF_PARAMS = [:external_id, :title, :url_large, :url_small]
 
   def index
-    render json: current_user.favorites, status: :ok
+    render json: current_user.favorites(params[:query]), status: :ok
   end
 
   def search
